@@ -16,7 +16,7 @@
 
     # Import containers
     ../../services/iot
-    ../../services/media/jellyfin.nix
+    ../../services/media-nas
 
     # System-specific configs
     ./services.nix
@@ -36,6 +36,8 @@
 
   boot.zfs.extraPools = [ "Nas-main" ];
 
+  # User things for NAS HDD access
+  users.groups.media.members = [ "transmission" "jellyfin" "sonarr" "radarr" ];
 
   swapDevices = [ {
     device = "/var/lib/swapfile";

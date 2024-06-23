@@ -22,6 +22,8 @@
       "androidtv"
       "androidtv_remote"
       "spotify"
+      "vesync"
+      "samsungtv"
     ];
     config = {
       # Includes dependencies for a basic setup

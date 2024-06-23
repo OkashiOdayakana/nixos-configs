@@ -26,8 +26,14 @@
     record = {
       enabled = true;
       retain = {
-        days = 2;
+        days = 7;
         mode = "all";
+      };
+      events = {
+        retain = {
+          default = 60;
+          mode = "motion";
+        };
       };
     };
 

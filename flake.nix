@@ -37,6 +37,8 @@
                 "iot/mqtt/frigate" = {};
                 "iot/frigate-cam" = {};
                 "iot/mqtt/zigbee2mqtt.yaml" = {};
+                "vpn/protonvpn/privateKey" = {};
+                "media/transmission/creds.json" = {};
               };
             };
           }

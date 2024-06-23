@@ -7,5 +7,4 @@
       reverse_proxy http://localhost:8123
     '';
   };
-
 }

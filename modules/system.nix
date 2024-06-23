@@ -41,9 +41,13 @@ in {
     htop
     lm_sensors
     inputs.agenix.packages."${system}".default
+    wireguard-tools
   ];
 
   environment.variables.EDITOR = "vim";
+
+  # Use nftables instead of iptables.
+  networking.nftables.enable = true;
 
   nix = let
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
