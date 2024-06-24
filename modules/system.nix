@@ -42,12 +42,17 @@ in {
     lm_sensors
     inputs.agenix.packages."${system}".default
     wireguard-tools
+    usbutils
+    pciutils
+    gnupg
   ];
 
   environment.variables.EDITOR = "vim";
 
   # Use nftables instead of iptables.
   networking.nftables.enable = true;
+
+  services.udev.packages = [ pkgs.yubikey-personalization pkgs.libu2f-host ];
 
   nix = let
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;

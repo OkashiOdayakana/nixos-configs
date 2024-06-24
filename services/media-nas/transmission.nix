@@ -115,6 +115,8 @@ in
     rpc-bind-address = "10.0.0.2";
     rpc-whitelist-enabled = false;
     rpc-authentication-required = true;
+    download-dir = "/Nas-main/torrent-media/Torrents";
+    incomplete-dir = "/Nas-main/torrent-media/Torrents/.incomplete";
   };
 };
 
