@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-
 {
 
 
@@ -20,20 +19,26 @@
   };
 
 
-  programs = {
-    vim = {
-      enable = true;
-      plugins = with pkgs.vimPlugins; [ vim-airline ];
-      settings = { ignorecase = true; };
-      extraConfig = ''
-        set mouse=a
-      '';
-    };
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    plugins = with pkgs; [
+      vimPlugins.nvim-treesitter
+      vimPlugins.nvim-treesitter.withAllGrammars
+      vimPlugins.lightline-vim
+      luajitPackages.fzf-lua
+    ];
+    extraConfig = ''
+    '';
   };
 
 
-  home.packages = [
-    pkgs.nmap
+  home.packages = with pkgs; [
+    nmap
+    ripgrep
+    bat
+    fd
  #   pkgs.gnupg
   ];
 
