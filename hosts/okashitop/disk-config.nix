@@ -1,36 +1,61 @@
-{ disks ? [ "/dev/nvme0n1" ], ... }: {
+{ config, lib, ... }:
+{
   disko.devices = {
     disk = {
       vdb = {
-        device = builtins.elemAt disks 0;
         type = "disk";
+        device = lib.mkDefault "/dev/nvme0n1";
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "ESP";
-              start = "1MiB";
-              end = "500MiB";
-              bootable = true;
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "512M";
+              type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
+                mountOptions = [
+                  "defaults"
+                ];
               };
-            }
-            {
-              name = "root";
-              start = "500MiB";
-              end = "100%";
-              part-type = "primary";
+            };
+            luks = {
+              size = "100%";
               content = {
-                type = "filesystem";
-                format = "bcachefs";
-                mountpoint = "/";
+                type = "luks";
+                name = "crypted";
+                # disable settings.keyFile if you want to use interactive password entry
+                passwordFile = "/tmp/secret.key";
+                settings = {
+                  allowDiscards = true;
+                };
+
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/swap" = {
+                      mountpoint = "/.swapvol";
+                      swap.swapfile.size = "8G";
+                    };
+                  };
+                };
               };
-            }
-          ];
+            };
+          };
         };
       };
     };

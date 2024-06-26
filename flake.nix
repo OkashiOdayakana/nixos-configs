@@ -24,6 +24,7 @@
     home-manager,
     agenix,
     sops-nix,
+    disko,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -72,6 +73,8 @@
               defaultSopsFile = ./secrets/secrets.yaml;
               age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
               secrets = {
+	        "hosts/okashitop/luksPwd" = {};
+		"hosts/okashitop/password" = {};
               };
             };
           }
@@ -84,6 +87,7 @@
             home-manager.extraSpecialArgs = inputs;
             home-manager.users.okashi = import ./home;
           }
+	  disko.nixosModules.disko
         ];
       };
     };

@@ -9,6 +9,7 @@
     [
     # Imported modules
     ../../modules/system.nix
+    ../../modules/laptop.nix
     ../../modules/hwaccel-intel.nix
     ../../modules/desktop/gnome
 
@@ -19,6 +20,9 @@
     ./disk-config.nix
   ];
 
+  boot.supportedFilesystems = [ "bcachefs" ];
+
+  sops.secrets."hosts/okashitop/password".neededForUsers = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

@@ -2,12 +2,16 @@
   username = "okashi";
 
 in {
+  sops.secrets."hosts/okashitop/password" = {};
+  sops.secrets."hosts/okashitop/password".neededForUsers = true;
   # Initialize user
   users.users.okashi = {
     isNormalUser = true;
     description = "okashi";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    hashedPasswordFile = config.sops.secrets."hosts/okashitop/password".path;
+    
   };
 
   # Set your time zone.
